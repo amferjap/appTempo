@@ -2,9 +2,9 @@
 
 # Índice
 
-1. [Propósito de este proyecto.](Propósito)
-2. [Herramientas.](Herramientas)
-3. [Creación del entorno.](Creación del entorno)
+1. [Propósito de este proyecto.](#Propósito)
+2. [Herramientas.](#Herramientas)
+3. [Creación del entorno.](#Creación del entorno)
 4. [Desarrollo de la app.]()
 
 # Propósito
