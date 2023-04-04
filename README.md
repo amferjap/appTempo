@@ -2,10 +2,10 @@
 
 # Índice
 
-1. Propósito de este proyecto.
-2. Herramientas.
-3. Creación del entorno.
-4. Desarrollo de la app.
+1. [Propósito de este proyecto.](Propósito)
+2. [Herramientas.](Herramientas)
+3. [Creación del entorno.](Creación del entorno)
+4. [Desarrollo de la app.]()
 
 # Propósito
 
@@ -77,7 +77,7 @@ Luego de insertar los repositorios de jenkins, debemos ejecutar los siguientes c
 
 ``apt update``
 
-``apt install fontconfig openjdk-11-jre``
+``apt install fontconfig openjdk-17-jdk``
 
 `` apt install jenkins``
 
