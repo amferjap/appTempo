@@ -4,7 +4,7 @@
 
 1. [Propósito de este proyecto.](#Propósito)
 2. [Herramientas.](#Herramientas)
-3. [Creación del entorno.](Entorno)
+3. [Creación del entorno.](#Entorno)
 4. [Desarrollo de la app.]()
 
 # Propósito
