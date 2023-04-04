@@ -4,7 +4,7 @@
 
 1. [Propósito de este proyecto.](#Propósito)
 2. [Herramientas.](#Herramientas)
-3. [Creación del entorno.](#Creación del entorno)
+3. [Creación del entorno.](Entorno)
 4. [Desarrollo de la app.]()
 
 # Propósito
@@ -27,7 +27,7 @@ MariaDB: servidor de base de datos.
 Virtualbox: progrmama para virtualización que utlizaré para crear un servidor de base de datos y un servidor de Jenkins.
 Docker: programa de creación de contenedores que me permitirá separar el forntend y el backend, para facilitarme el desarrollo de los mismos y mejorar su rendimiento.
 
-# Creación del entorno
+# Entorno
 
 ## Servidor de Base de Datos
 
