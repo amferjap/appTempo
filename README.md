@@ -33,11 +33,11 @@ Docker: programa de creación de contenedores que me permitirá separar el fornt
 
 Con virutalbox crearé una máquina con Debian sin entorno gráfico. Posteriormente, instalaré en ella MariaDB y crearé un usuario con permisos sobre la base de datos y sus tablas.
 
-[](Imagenes/configuracionred.png)
+![](Imagenes/configuracionred.png)
 
-[](Imagenes/instalacionmariadb.png)
+![](Imagenes/instalacionmariadb.png)
 
-[](Imagenes/creacionbasedatos.png)
+![](Imagenes/creacionbasedatos.png)
 
 ## Entorno virtual
 
@@ -46,32 +46,32 @@ crear contenedores más livianos, ya que, solo se instalarán las librerías nec
 
 ### Backend
 
-[](Imagenes/creacionenvback.png)
+![](Imagenes/creacionenvback.png)
 
 Una vez creado el entorno virtual he de instalar las dependencias necesarias para el backend. Para ello debo activar el entorno virtual con ``source bin/activate`` esto en el caso de Linux. En el caso de linux, en windows es
 ``Scripts/activate``.
 
 Una vez activado es hora de instalar los módulos necesarios, para ello nos valdremos de la herramienta pip.
 
-[](Imagenes/pipback.png)
+![](Imagenes/pipback.png)
 
 Para dejar de usar un entorno virtual de python se usa ``deactivate``
 
 ### Frontend
 
-[](Imagenes/pipfront.png)
+![](Imagenes/pipfront.png)
 
 ## Jenkins
 
 Para usar jenkins, lo instalaré en otra máquina virtual Debian sin entorno gráfico.
 
-[](Imagenes/redjenkins.png)
+![](Imagenes/redjenkins.png)
 
 ### Instalación de Jenkins
 
 He seguido los pasos proporiconados por la web de Jenkins.
 
-[](Imagenes/instjenkins.png)
+![](Imagenes/instjenkins.png)
 
 Luego de insertar los repositorios de jenkins, debemos ejecutar los siguientes comandos:
 
@@ -85,13 +85,13 @@ Una vez instalado el paquete, desde el navegador, deberemos terminar de instalar
 
 Aparecerá una iamgen como esta:
 
-[](Imagenes/initial.png)
+![](Imagenes/initial.png)
 
 Deberemos introducir la contraseña que viene por defecto en la ruta indicada, una vez hecho, nos preguntará que opción instalar, escogemos la opción de plugins recomendados.
 
 Para terminar, nos dejará crearnos un usuario administrador para jenkins. Una vez creado, ya habrá finalizado la instalación de Jenkins.
 
-[](Imagenes/finalinstj.png)
+![](Imagenes/finalinstj.png)
 
 En esta misma máquina es necesario instalar docker para facilitar la automatización de la compilación de la aplicación en una imagen docker.
 
