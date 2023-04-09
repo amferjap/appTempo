@@ -96,3 +96,31 @@ Para terminar, nos dejará crearnos un usuario administrador para jenkins. Una v
 En esta misma máquina es necesario instalar docker para facilitar la automatización de la compilación de la aplicación en una imagen docker.
 
 ``apt install docker.io``
+
+# Desarrollo
+
+Antes de comenzar con el desarrollo de la aplicación, voy a crear las tablas en la base de datos. Estas tablas serán útiles para almacenar los datos brutos obtenidos de la fuente de información.
+
+- Precipitaciones
+
+![](Imagenes/tabla_pre.png)
+
+- Temperaturas
+
+![](Imagenes/tabla_temp.png)
+
+- Humedad relativa
+
+![](Imagenes/tabla_hum.png)
+
+## Backend
+
+El backend estará conformado por un microservicio de obtención de datos, uno de análisis de datos y una api rest para comunicarse con el frontend, además del servidor de bases de datos.
+
+### Obtención de datos
+
+Se encargará de obtener los datos de los fichero xml proporcionados por AEMET, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
+
+IMPORTANTE!!! Para que el programa se pueda conectar remotamente al servidor de bases de datos, se debe configurar el siguiente fichero, cambiando la dirección de localhost en bind-adress por "0.0.0.0".
+
+![](Imagenes/cambiarconf.png)
