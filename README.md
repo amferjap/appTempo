@@ -5,7 +5,7 @@
 1. [Propósito de este proyecto.](#Propósito)
 2. [Herramientas.](#Herramientas)
 3. [Creación del entorno.](#Entorno)
-4. [Desarrollo de la app.]()
+4. [Desarrollo de la app.](#Desarrollo)
 
 # Propósito
 
@@ -31,11 +31,9 @@ Docker: programa de creación de contenedores que me permitirá separar el fornt
 
 ## Servidor de Base de Datos
 
-Con virutalbox crearé una máquina con Debian sin entorno gráfico. Posteriormente, instalaré en ella MariaDB y crearé un usuario con permisos sobre la base de datos y sus tablas.
+Con virutalbox crearé un contenedor de Docker con mariadb. Posteriormente, crearé un usuario con permisos sobre la base de datos y sus tablas.
 
-![](Imagenes/configuracionred.png)
-
-![](Imagenes/instalacionmariadb.png)
+``docker run -d --name bd_app -p 3306:3306 -v C:\Users\RubénAmadoCardenas\appTiempo\database:/var/lib/mysql mariadb -e MARIADB_ROOT_PASSWORD=root mariadb``
 
 ![](Imagenes/creacionbasedatos.png)
 
@@ -83,7 +81,7 @@ Luego de insertar los repositorios de jenkins, debemos ejecutar los siguientes c
 
 Una vez instalado el paquete, desde el navegador, deberemos terminar de instalar. Para acceder por el navegador debemos introducir la dirección siguiente ``http://ip_delservidor:8080``.
 
-Aparecerá una iamgen como esta:
+Aparecerá una imagen como esta:
 
 ![](Imagenes/initial.png)
 
@@ -119,8 +117,6 @@ El backend estará conformado por un microservicio de obtención de datos, uno d
 
 ### Obtención de datos
 
-Se encargará de obtener los datos de los fichero xml proporcionados por AEMET, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
+Se encargará de obtener los datos de los fichero xml proporcionados por AEMET, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada en el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
 
-IMPORTANTE!!! Para que el programa se pueda conectar remotamente al servidor de bases de datos, se debe configurar el siguiente fichero, cambiando la dirección de localhost en bind-adress por "0.0.0.0".
-
-![](Imagenes/cambiarconf.png)
+Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute una vez al día de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
