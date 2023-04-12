@@ -4,7 +4,7 @@ import mariadb
 conexion = mariadb.connect( #Parámetros necesarios para la conexión con el servidor de base de datos.
     user='ruben',
     password='ruben',
-    host='192.168.1.33',
+    host='172.17.0.5',
     database='appTiempo',
 )
 cursor = conexion.cursor() #Inicialización del cursor que recibirá las secuencias sql.
