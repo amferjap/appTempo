@@ -4,7 +4,7 @@ import mariadb
 conexion = mariadb.connect( #Parámetros necesarios para la conexión con el servidor de base de datos.
     user='ruben',
     password='ruben',
-    host='172.17.0.5',
+    host='bd_app',
     database='appTiempo',
 )
 cursor = conexion.cursor() #Inicialización del cursor que recibirá las secuencias sql.
@@ -20,10 +20,13 @@ for dia in soup.find_all('dia'): #De esta manera busco todas las etiquetas del x
     dias.append(dia['fecha'])#Ingreso el día en la tupla correspondiente.
 precipitaciones = tuple(zip(dias, precipitacionest)) #Unifico las dos tuplas en una, de manera que cada día esté con su probabilidad.
 for valor in precipitaciones: #Bucle para crear la sentencia sql de cada día. El bucle recorrerá toda la tupla.
-    valor0=str(valor[0]) #Posición de la fecha en la tupla.
-    valor1=int(valor[1]) #Posición de la probabilidad en la tupla.
-    consulta_p = "INSERT INTO precipitaciones VALUES (clave_prec, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
-    cursor.execute(consulta_p, (valor0, valor1))#Le paso los valores y ejecuto la sentencia sql.
+    try:
+        valor0=str(valor[0]) #Posición de la fecha en la tupla.
+        valor1=int(valor[1]) #Posición de la probabilidad en la tupla.
+        consulta_p = "INSERT INTO precipitaciones VALUES (clave_prec, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
+        cursor.execute(consulta_p, (valor0, valor1))#Le paso los valores y ejecuto la sentencia sql.
+    except:
+        continue
 conexion.commit()#Guardo los cambios. Importante hacerlo.
 #Filtrar datos para obener temperaturas.
 dias_temperaturas=[]
@@ -37,11 +40,14 @@ for dia in soup.find_all('dia'):
 temperaturas = tuple(zip(dias_temperaturas, maximas_t, minimas_t))
 #Bucle para almacenar en las tuplas de temperaturas.
 for valor in temperaturas:
-    valor0=str(valor[0])
-    valor1=int(valor[1])
-    valor2=int(valor[2])
-    consulta_p = "INSERT INTO temperaturas VALUES (clave_t, ?, ?, ?)"
-    cursor.execute(consulta_p, (valor0, valor1, valor2))
+    try:
+        valor0=str(valor[0])
+        valor1=int(valor[1])
+        valor2=int(valor[2])
+        consulta_p = "INSERT INTO temperaturas VALUES (clave_t, ?, ?, ?)"
+        cursor.execute(consulta_p, (valor0, valor1, valor2))
+    except:
+        continue
 conexion.commit()
 #Filtrar datos para obtener humedades relativas.
 dias_h=[]
@@ -55,10 +61,13 @@ for dia in soup.find_all('dia'):
 humedades = tuple(zip(dias_h, maxima_h, minima_h))
 #Bucle para almacenar en las tuplas de humedades.
 for valor in humedades:
-    valor0=str(valor[0])
-    valor1=int(valor[1])
-    valor2=int(valor[2])
-    consulta_p = "INSERT INTO humedades VALUES (clave_h, ?, ?, ?)"
-    cursor.execute(consulta_p, (valor0, valor1, valor2))
+    try:
+        valor0=str(valor[0])
+        valor1=int(valor[1])
+        valor2=int(valor[2])
+        consulta_p = "INSERT INTO humedades VALUES (clave_h, ?, ?, ?)"
+        cursor.execute(consulta_p, (valor0, valor1, valor2))
+    except:
+        continue
 conexion.commit()
 conexion.close()#Cerrar la conexión. Si no se hace el código no parará de ejecutarse hasta cerrar conexión.
