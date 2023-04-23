@@ -14,50 +14,33 @@ pipeline {
     stages {
         stage ('Build Docker web'){
             steps {
-                script {
-                    dockerImagweb = docker.build(registryweb, "-f ${dockerfilePathback}.")
-                }
+                sh 'docker build -t ${regsitryweb} ${dockerfilePathback}'
             }
         }
         stage ('Build Docker backend'){
             steps {
-                script {
-                    dockerImagback = docker.build(registryback, "-f ${dockerfilePathbackpan}.")
-                }
+                sh 'docker build -t ${regsitryback} ${dockerfilePathbackpan}'
             }
         }
         stage ('Build Docker frontend'){
             steps {
-                script {
-                    dockerImagfront = docker.build(registryfront, "-f ${dockerfilePathfront}.")
-                }
+                sh 'docker build -t ${regsitryfront} ${dockerfilePathfront}'
             }
         }
         stage ('Push webscrapp'){
             steps {
-                script {
-                    docker.withRegistry('', registryCredential){
-                        dockerImagweb.push()
-                    }
-                }
+                sh 'docker login -u ruvika07 -p ${regsitryCredential}'
+                sh 'docker push ${registryweb}'
             }
         }
         stage ('Push backend'){
             steps {
-                script {
-                    docker.withRegistry('', registryCredential){
-                        dockerImagback.push()
-                    }
-                }
+                sh 'docker push ${registryback}'
             }
         }
         stage ('Push front'){
             steps {
-                script {
-                    docker.withRegistry('', registryCredential){
-                        dockerImagfront.push()
-                    }
-                }
+                sh 'docker push ${registryfront}'
             }
         }
     }
