@@ -14,33 +14,33 @@ pipeline {
     stages {
         stage ('Build Docker web'){
             steps {
-                sh 'docker build -t ${regsitryweb} ${dockerfilePathback}'
+                sh 'docker build -t $regsitryweb $dockerfilePathback'
             }
         }
         stage ('Build Docker backend'){
             steps {
-                sh 'docker build -t ${regsitryback} ${dockerfilePathbackpan}'
+                sh 'docker build -t $regsitryback $dockerfilePathbackpan'
             }
         }
         stage ('Build Docker frontend'){
             steps {
-                sh 'docker build -t ${regsitryfront} ${dockerfilePathfront}'
+                sh 'docker build -t $regsitryfront $dockerfilePathfront'
             }
         }
         stage ('Push webscrapp'){
             steps {
-                sh 'docker login -u ruvika07 -p ${regsitryCredential}'
-                sh 'docker push ${registryweb}'
+                sh 'docker login -u ruvika07 -p $regsitryCredential'
+                sh 'docker push $registryweb'
             }
         }
         stage ('Push backend'){
             steps {
-                sh 'docker push ${registryback}'
+                sh 'docker push $registryback'
             }
         }
         stage ('Push front'){
             steps {
-                sh 'docker push ${registryfront}'
+                sh 'docker push $registryfront'
             }
         }
     }
