@@ -14,17 +14,17 @@ pipeline {
     stages {
         stage ('Build Docker web'){
             steps {
-                sh 'docker build -t $regsitryweb $dockerfilePathback'
+                sh 'docker build -t $registryweb $dockerfilePathback'
             }
         }
         stage ('Build Docker backend'){
             steps {
-                sh 'docker build -t $regsitryback $dockerfilePathbackpan'
+                sh 'docker build -t $registryback $dockerfilePathbackpan'
             }
         }
         stage ('Build Docker frontend'){
             steps {
-                sh 'docker build -t $regsitryfront $dockerfilePathfront'
+                sh 'docker build -t $registryfront $dockerfilePathfront'
             }
         }
         stage ('Push webscrapp'){
