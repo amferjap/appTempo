@@ -1,7 +1,7 @@
 pipeline {
     agent { node{label 'master'} }
 
-    enviroment {
+    environment {
         dockerfilePathback = 'App_proyecto/backend/src/'
         dockerfilePathbackpan = 'App_proyecto/backend/srp/'
         dockerfilePathfront = 'App_proyecto/frontend/'
