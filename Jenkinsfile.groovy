@@ -2,9 +2,9 @@ pipeline {
     agent { node{label 'master'} }
 
     environment {
-        dockerfilePathback = 'App_proyecto/backend/src/'
-        dockerfilePathbackpan = 'App_proyecto/backend/srp/'
-        dockerfilePathfront = 'App_proyecto/frontend/'
+        dockerfilePathback = '/var/lib/jenkins/workspace/appTempo/backend/src/'
+        dockerfilePathbackpan = '/var/lib/jenkins/workspace/appTempo/backend/srp/'
+        dockerfilePathfront = '/var/lib/jenkins/workspace/appTempo/frontend/'
         registryweb = 'ruvika07/webscrapping:v1'
         regsitryback = 'ruvika07/backend:v1'
         registryfront = 'ruvika07/frontend:v1'
