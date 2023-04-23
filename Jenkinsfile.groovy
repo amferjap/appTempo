@@ -6,7 +6,7 @@ pipeline {
         dockerfilePathbackpan = '/var/lib/jenkins/workspace/appTempo/backend/srp/'
         dockerfilePathfront = '/var/lib/jenkins/workspace/appTempo/frontend/'
         registryweb = 'ruvika07/webscrapping:v1'
-        regsitryback = 'ruvika07/backend:v1'
+        registryback = 'ruvika07/backend:v1'
         registryfront = 'ruvika07/frontend:v1'
         regsitryCredential = 'Madroño12'
     }
