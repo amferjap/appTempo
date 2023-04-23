@@ -15,21 +15,21 @@ pipeline {
         stage ('Build Docker web'){
             steps {
                 script {
-                    dockerImagweb = docker.build(registryweb, "-f $(dockerfilePathback)/.")
+                    dockerImagweb = docker.build(registryweb, "-f ${dockerfilePathback}/.")
                 }
             }
         }
         stage ('Build Docker backend'){
             steps {
                 script {
-                    dockerImagback = docker.build(registryback, "-f $(dockerfilePathbackpan)/.")
+                    dockerImagback = docker.build(registryback, "-f ${dockerfilePathbackpan}/.")
                 }
             }
         }
         stage ('Build Docker frontend'){
             steps {
                 script {
-                    dockerImagfront = docker.build(registryfront, "-f $(dockerfilePathfront)/.")
+                    dockerImagfront = docker.build(registryfront, "-f ${dockerfilePathfront}/.")
                 }
             }
         }
