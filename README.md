@@ -163,7 +163,7 @@ De esta manera, el usuario jenkins se introducirá en el grupo docker y podrá r
 
 Para comenzar con el build del pipeline deberemos pulsar en contruir ahora, Jenkins nos informará de cualquier error que pueda exsistir, tanto en el código de los programas o en los ficheros Docker. Esto nos facilita mucho la tarea a la hora de desarrollar aplicaciones, ya que basta con ejecutar la pipeline para automatizar todo el proceso. Además como he diferenciado cada stage, nos indicará en el paso exacto donde falló la integración.
 
-[](Imagenes/final.png)
+![](Imagenes/final.png)
 
 Por último, he realizado un fichero yml de Docker-compose para la auotmatización de la creación de los contenedores de mi aplicación, de esta manera con un solo comando me levantará los tres contenedores que necesito para el funcionamiento de appTempo. Para ello se realizar con el comando siguiente.
 
