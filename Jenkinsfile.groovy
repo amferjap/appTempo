@@ -12,7 +12,7 @@ pipeline {
         registryweb = 'ruvika07/webscrapping:v1'
         registryback = 'ruvika07/backend:v1'
         registryfront = 'ruvika07/frontend:v1'
-        regsitryCredential = 'Madroño12'
+/*        regsitryCredential = 'Madroño12' */
     }
 
     stages {
@@ -49,6 +49,13 @@ pipeline {
         stage ('Push front'){
             steps {
                 sh 'docker push $registryfront'
+            }
+        }
+        stage ('Borrar imagenes'){
+            steps {
+                sh 'docker rmi $regsitryweb'
+                sh 'docker rmi $registryback'
+                sh 'docker rmi $regsitryfront'
             }
         }
     }
