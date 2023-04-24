@@ -11,7 +11,7 @@
 # Propósito
 
 Este es el proyecto que he realizado para la finalización del Grado Superior de Administración en Sistermas Informáticos en Red.
-Consiste en el desarrollo de una app con Python para la recogida automática de datos de una estación meteorológica y el análisis los mismos para realizar previsiones futuras. El desarrollo de la app, estará sometido a los principios
+Consiste en el desarrollo de una app con Python para la recogida automática de datos de AEMET y el análisis los mismos para realizar previsiones futuras. El desarrollo de la app, estará sometido a los principios
 de la integración continua utilizando las herraminetas necesarias para ello.
 Por otro lado, esta app estará conformada por un backend y un frontend. El backend se compone de una aplicación de recogida de datos, una aplicación de análisis de datos, una base de datos y una api rest. Esta última, servirá para
 establecer la comunicación entre el backend y el frontend, el cual mostrará a través de la web los análisis realizados de los datos.
@@ -19,20 +19,28 @@ establecer la comunicación entre el backend y el frontend, el cual mostrará a 
 # Herramientas
 
 Python: lenguaje de programación utilizado para el desarrollo de la app.
-BeautifulSoup: librería de Python que me permitirá realizar web scrapping y así obtener los datos que me interesen de la estación meteorológica y almacenarlos en mi servidor de base de datos.
-Pandas: librería de Python para el anaĺsiis de los datos almacenados. Una vez analizados serán almcenados en una base de datos distinta.
+
+BeautifulSoup: librería de Python que me permitirá realizar web scrapping y así obtener los datos que me interesen de AEMET y almacenarlos en mi servidor de base de datos.
+
+Pandas: librería de Python para el anaĺsiis de los datos almacenados.
+
 Flask: framework de Python para el desarrollo de Api Rest.
+
 Streamlit: librería de Python para desarrollo web (lo utilizaré para crear el Frontend).
+
 Jenkins: programa para la automatización de todo el desarrolo de una app.
+
 MariaDB: servidor de base de datos.
+
 Virtualbox: progrmama para virtualización que utlizaré para crear un servidor de base de datos y un servidor de Jenkins.
+
 Docker: programa de creación de contenedores que me permitirá separar el forntend y el backend, para facilitarme el desarrollo de los mismos y mejorar su rendimiento.
 
 # Entorno
 
 ## Servidor de Base de Datos
 
-Con virutalbox crearé un contenedor de Docker con mariadb. Posteriormente, crearé un usuario con permisos sobre la base de datos y sus tablas.
+Con Docker crearé un contenedor con mariadb. Posteriormente, crearé un usuario con permisos sobre la base de datos y sus tablas.
 
 ``docker run -d --name bd_app -p 3306:3306 -v C:\Users\RubénAmadoCardenas\appTiempo\database:/var/lib/mysql mariadb -e MARIADB_ROOT_PASSWORD=root mariadb``
 
