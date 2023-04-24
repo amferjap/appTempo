@@ -30,9 +30,9 @@ datos_humedades = cursor.fetchall()
 df_humedades = pd.DataFrame(datos_humedades, columns=['clave_h', 'fecha', 'maxima', 'minima'])
 
 conexion.close()
-
+# Creación de los métodos get para la obtención de datos de las tablas
 app = Flask(__name__)
-
+# Método get para obtener los promedios de la probabilidad de lluvia
 @app.route('/promedio_prob_precipitacion', methods=['GET'])
 def obtner_promedio_prob_precipitacion():
     promedio_prob_precipitacion = df_precipitaciones['probabilidad'].mean()
@@ -71,5 +71,7 @@ def obtener_probabilidad_frio():
     temperatura_porcentaje_fr = probabilidad_frio * 100
     probabilidad_formateada_fr = '{:.0f}'.format(temperatura_porcentaje_fr)
     return jsonify(probabilidad_formateada_fr)
+
+#Iniciar la API
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

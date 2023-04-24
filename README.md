@@ -1,4 +1,4 @@
-# App proyecto
+# appTempo
 
 # Índice
 
@@ -6,6 +6,7 @@
 2. [Herramientas.](#Herramientas)
 3. [Creación del entorno.](#Entorno)
 4. [Desarrollo de la app.](#Desarrollo)
+5. [Integración](#Integración)
 
 # Propósito
 
@@ -113,10 +114,51 @@ Antes de comenzar con el desarrollo de la aplicación, voy a crear las tablas en
 
 ## Backend
 
-El backend estará conformado por un microservicio de obtención de datos, uno de análisis de datos y una api rest para comunicarse con el frontend, además del servidor de bases de datos.
+El backend estará conformado por un microservicio de obtención de datos, uno de análisis de datos que funcionará a su vez como una api rest para comunicarse con el frontend y el servidor de bases de datos.
 
 ### Obtención de datos
 
 Se encargará de obtener los datos de los fichero xml proporcionados por AEMET, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada en el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
 
-Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute una vez al día de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
+Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el] funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute una vez al día de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
+
+### Análisis de datos (api)
+
+Esta api se ha desarrollado con el framework Flask de python, además se han utilizado las librerías de Pandas y mariadb para analizar los datos extraídos de AEMET y calcular promedios y previsiones futuras. Se puede ver el código de la api [aquí](/backend/srp/app.py)
+
+Esta api se compilará también en una imagen docker. Al igual que la obtención de datos se necesitará un [Dockerfile](/backend/srp/Dockerfile) para estipular los pasos de la configuración de la imagen. Será un contenedor que partirá a partir de una imagen debian, se instalará los paquetes necesarios y las librerías necesarias para el funcionamiento de la api. En este caso, no será necesario la existencia del fichero crontab, ya que será la propia api la que vaya obteniendo información de la base de datos y realizando los calculos necesarios. Todo viene indicado en los ficheros a través de comentarios.
+
+## Frontend
+
+El frontend será la aplicación encargada de comunicar al usuario con el backend. Estará desarrollada con streamlit, una librería que facilita el desarrollo web con python. Cada dato mostrado en el frontend debe tener un método GET en la api del backend, para que a través de una petición realizada por el frontend obtenga los datos necesarios para mostrar, nuevamente todo viene detallado en el [código](/frontend/frontend.py).
+
+Al igual que los programas anteriores, el frontend también se compilará en una imagen Docker a través de un [Dockerfile](/frontend/Dockerfile)
+
+# Integración
+
+Llega la parte de dar uso a nuestro servidor jenkins. Jenkins se encargará de automatizar la compilación de los programas en imagenes Docker y subirlas a mi repositorio de DockerHub. Para realizarlo, será necesario el uso de fichero conocido como [Jenknsfile](./Jenkinsfile.groovy). El cual establecerá los pasos que debe realizar nuestro servidor jenkins para la compilación de los contenedores. Por otro lado, en la interfaz de Jenkins, debremos crear un proyecto de tipo Pipeline, asociar el proyecto con este repositorio de GitHub y asegurarnos que el fichero Jenkinsfile se encuentra en la raíz del repositorio. Jenkins buscará ese mismo fichero y comenzará con la build.
+
+![](Imagenes/pipeline.png)
+
+Una vez creado el proyecto deberemos configurar el pipeline para indicarle el repositorio y que debe buscar un fichero Jenkinsfile.
+
+![](Imagenes/config-pn.png)
+
+Pero esto no es suficiente para que funcione la integración continua, debemos hacer alguna configuración extra al servidor de Jenkins.
+
+- Añadir el usuario Jenkins al grupo Docker.
+En pasos anteirores a la hora de crear nuestro servidor Jenkins especifiqué que era necesario la instalación de Docker, es neceario ya que es el porpio servidor el que realizará los comandos de docker build y docker push. Pues bien, el usuario que realziará esta tarea es el usuario jenkins, este deberá tener permisos sobre docker para realizar los distintos stages(tareas) del Jenkinsfile. Para ello, en el servidor como usuario root debemos ejecutar este comando.
+
+``usermod -aG docker jenkins``
+
+De esta manera, el usuario jenkins se introducirá en el grupo docker y podrá realizar todas las tareas que sean necesarias para la integración de mi aplicación. En el propio Jenkinsfile he añadido comentarios que explican cada paso y el porqué de cada configuración.
+
+Para comenzar con el build del pipeline deberemos pulsar en contruir ahora, Jenkins nos informará de cualquier error que pueda exsistir, tanto en el código de los programas o en los ficheros Docker. Esto nos facilita mucho la tarea a la hora de desarrollar aplicaciones, ya que basta con ejecutar la pipeline para automatizar todo el proceso. Además como he diferenciado cada stage, nos indicará en el paso exacto donde falló la integración.
+
+[](Imagenes/final.png)
+
+Por último, he realizado un fichero yml de Docker-compose para la auotmatización de la creación de los contenedores de mi aplicación, de esta manera con un solo comando me levantará los tres contenedores que necesito para el funcionamiento de appTempo. Para ello se realizar con el comando siguiente.
+
+``docker-compose up -d``
+
+El comando se debe ejecutar en el mismo directorio del fichero. Los puertos y la red a la que se deben conectar los contenedores vienen especificados en el [fichero](./docker-compose.yml)

@@ -12,5 +12,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install mariadb
 #Indicar puerto del contenedor
 EXPOSE 5000
-#Inicia el servicio del contenedor con el frontend
+#Inicia el servicio del contenedor
 CMD [ "python3", "app.py" ]
