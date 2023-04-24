@@ -159,6 +159,10 @@ En pasos anteirores a la hora de crear nuestro servidor Jenkins especifiqué que
 
 ``usermod -aG docker jenkins``
 
+- Hacer docker login en el servidor Jenkins para los docker push
+
+``docker login -u usuario_dockerhub -p password_dockerhub``
+
 De esta manera, el usuario jenkins se introducirá en el grupo docker y podrá realizar todas las tareas que sean necesarias para la integración de mi aplicación. En el propio Jenkinsfile he añadido comentarios que explican cada paso y el porqué de cada configuración.
 
 Para comenzar con el build del pipeline deberemos pulsar en contruir ahora, Jenkins nos informará de cualquier error que pueda exsistir, tanto en el código de los programas o en los ficheros Docker. Esto nos facilita mucho la tarea a la hora de desarrollar aplicaciones, ya que basta con ejecutar la pipeline para automatizar todo el proceso. Además como he diferenciado cada stage, nos indicará en el paso exacto donde falló la integración.
