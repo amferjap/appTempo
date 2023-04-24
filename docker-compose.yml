@@ -6,17 +6,13 @@ networks:
 
 services:
   datos:
-    build:
-      context: ./backend/src
-      dockerfile: Dockerfile
+    image: ruvika07/webscrapping:v1
     container_name: datos
     networks:
       - appTiempo
 
   api_backend:
-    build:
-      context: ./backend/srp
-      dockerfile: Dockerfile
+    image: ruvika07/backend:v1
     container_name: api_backend
     ports:
       - '5000:5000'
@@ -24,9 +20,7 @@ services:
       - appTiempo
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: ruvika07/frontend:v1
     container_name: frontend
     ports:
       - '8501:8501'
