@@ -12,7 +12,6 @@ pipeline {
         registryweb = 'ruvika07/webscrapping:v1'
         registryback = 'ruvika07/backend:v1'
         registryfront = 'ruvika07/frontend:v1'
-/*        regsitryCredential = 'Madroño12' */
     }
 
     stages {
@@ -36,8 +35,6 @@ pipeline {
 /* Una vez terminada la fase de compilación, inicia la subida de las imagenes. Se realiza un stage por cada programa*/
         stage ('Push webscrapp'){
             steps {
-/* En el primer stage se hace el login a DockerHub en el servidor, con una vez basta para poder realizar el resto de docker push*/
-/*                sh 'docker login -u ruvika07 -p $regsitryCredential' */
                 sh 'docker push $registryweb'
             }
         }
@@ -51,6 +48,7 @@ pipeline {
                 sh 'docker push $registryfront'
             }
         }
+/* Borrar las imagenes compiladas en el servidor */
         stage ('Borrar imagenes'){
             steps {
                 sh 'docker rmi $registryweb'
