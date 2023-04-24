@@ -53,9 +53,9 @@ pipeline {
         }
         stage ('Borrar imagenes'){
             steps {
-                sh 'docker rmi $regsitryweb'
+                sh 'docker rmi $registryweb'
                 sh 'docker rmi $registryback'
-                sh 'docker rmi $regsitryfront'
+                sh 'docker rmi $registryfront'
             }
         }
     }
