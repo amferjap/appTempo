@@ -37,7 +37,7 @@ pipeline {
         stage ('Push webscrapp'){
             steps {
 /* En el primer stage se hace el login a DockerHub en el servidor, con una vez basta para poder realizar el resto de docker push*/
-                sh 'docker login -u ruvika07 -p $regsitryCredential'
+/*                sh 'docker login -u ruvika07 -p $regsitryCredential' */
                 sh 'docker push $registryweb'
             }
         }

@@ -32,7 +32,7 @@ Jenkins: programa para la automatización de todo el desarrolo de una app.
 
 MariaDB: servidor de base de datos.
 
-Virtualbox: progrmama para virtualización que utlizaré para crear un servidor de base de datos y un servidor de Jenkins.
+Virtualbox: progrmama para virtualización que utlizaré para crear un servidor de Jenkins.
 
 Docker: programa de creación de contenedores que me permitirá separar el forntend y el backend, para facilitarme el desarrollo de los mismos y mejorar su rendimiento.
 
