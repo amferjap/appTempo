@@ -1,6 +1,8 @@
-from bs4 import BeautifulSoup
 import requests
 import mariadb
+import pytemperature
+import datetime
+
 conexion = mariadb.connect( #Parámetros necesarios para la conexión con el servidor de base de datos.
     user='ruben',
     password='ruben',
@@ -8,66 +10,45 @@ conexion = mariadb.connect( #Parámetros necesarios para la conexión con el ser
     database='appTiempo',
 )
 cursor = conexion.cursor() #Inicialización del cursor que recibirá las secuencias sql.
-datos = requests.get('https://www.aemet.es/xml/municipios/localidad_41034.xml') #Sentencia request que utiliza un método get para obtener la información del fichero xml.
-soup = BeautifulSoup(datos.text, features='xml') #Creación de la sopa. Se debe formatear en texto la salida del método get y debemos expecifiar que formato estamos parseando "xml"
 
-# Filtrar los datos para obtener los días y las probabilidades de precipitaciones. Inicializo dos duplas.
-dias=[] #Tupla que contendrá los días.
-precipitacionest=[] #Tupla que contendrá las propabilidades de cada día.
-#Bucle para almacenar información en las tuplas
-for dia in soup.find_all('dia'): #De esta manera busco todas las etiquetas del xml que se llamen día
-    precipitacionest.append(dia.prob_precipitacion.text) #Ingreso el contenido de la etiqueta de probabilidad en la tupla corrspondiente.
-    dias.append(dia['fecha'])#Ingreso el día en la tupla correspondiente.
-precipitaciones = tuple(zip(dias, precipitacionest)) #Unifico las dos tuplas en una, de manera que cada día esté con su probabilidad.
-for valor in precipitaciones: #Bucle para crear la sentencia sql de cada día. El bucle recorrerá toda la tupla.
-    try:
-        valor0=str(valor[0]) #Posición de la fecha en la tupla.
-        valor1=int(valor[1]) #Posición de la probabilidad en la tupla.
-        consulta_p = "INSERT INTO precipitaciones VALUES (clave_prec, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
-        cursor.execute(consulta_p, (valor0, valor1))#Le paso los valores y ejecuto la sentencia sql.
-    except:
-        continue
-conexion.commit()#Guardo los cambios. Importante hacerlo.
-#Filtrar datos para obener temperaturas.
-dias_temperaturas=[]
-maximas_t=[]#Tupla de las máximas temperaturas.
-minimas_t=[]#Tupla de las mínimas temperaturas.
-for dia in soup.find_all('dia'):
-    temperatura = dia.find('temperatura')
-    maximas_t.append(temperatura.maxima.text)
-    minimas_t.append(temperatura.minima.text)
-    dias_temperaturas.append(dia['fecha'])
-temperaturas = tuple(zip(dias_temperaturas, maximas_t, minimas_t))
-#Bucle para almacenar en las tuplas de temperaturas.
-for valor in temperaturas:
-    try:
-        valor0=str(valor[0])
-        valor1=int(valor[1])
-        valor2=int(valor[2])
-        consulta_p = "INSERT INTO temperaturas VALUES (clave_t, ?, ?, ?)"
-        cursor.execute(consulta_p, (valor0, valor1, valor2))
-    except:
-        continue
+data = requests.get('https://api.ecowitt.net/api/v3/device/real_time?application_key=4BB7A8EAD086979D5CD6F826A0701FB3&api_key=b0a66202-442d-4f17-9be6-7a4ace047048&mac=7C:87:CE:BC:C1:33&call_back=all') #Sentencia request que utiliza un método get para obtener la información del fichero xml.
+datos = data.json()
+
+fecha = datetime.datetime.now()
+
+temperatura_bruta = float(datos['data']['outdoor']['temperature']['value'])
+temperatura_neta = pytemperature.f2c(temperatura_bruta)
+
+consulta_p = "INSERT INTO temperaturas VALUES (clave_t, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
+cursor.execute(consulta_p, (fecha, temperatura_neta))#Le paso los valores y ejecuto la sentencia sql.
 conexion.commit()
-#Filtrar datos para obtener humedades relativas.
-dias_h=[]
-maxima_h=[]
-minima_h=[]
-for dia in soup.find_all('dia'):
-    humedad = dia.find('humedad_relativa')
-    maxima_h.append(humedad.maxima.text)
-    minima_h.append(humedad.minima.text)
-    dias_h.append(dia['fecha'])
-humedades = tuple(zip(dias_h, maxima_h, minima_h))
-#Bucle para almacenar en las tuplas de humedades.
-for valor in humedades:
-    try:
-        valor0=str(valor[0])
-        valor1=int(valor[1])
-        valor2=int(valor[2])
-        consulta_p = "INSERT INTO humedades VALUES (clave_h, ?, ?, ?)"
-        cursor.execute(consulta_p, (valor0, valor1, valor2))
-    except:
-        continue
+
+humedad = float(datos['data']['outdoor']['humidity']['value'])
+
+consulta_p = "INSERT INTO humedades VALUES (clave_h, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
+cursor.execute(consulta_p, (fecha, humedad))#Le paso los valores y ejecuto la sentencia sql.
 conexion.commit()
-conexion.close()#Cerrar la conexión. Si no se hace el código no parará de ejecutarse hasta cerrar conexión.
+
+prob_lluvia = float(datos['data']['rainfall']['rain_rate']['value'])
+
+consulta_p = "INSERT INTO precipitaciones VALUES (clave_prec, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
+cursor.execute(consulta_p, (fecha, prob_lluvia))#Le paso los valores y ejecuto la sentencia sql.
+conexion.commit()
+
+velocidad = float(datos['data']['wind']['wind_speed']['value'])
+gust = float(datos['data']['wind']['wind_gust']['value'])
+direccion = float(datos['data']['wind']['wind_direction']['value'])
+
+velocidad_real = velocidad * 1.60934
+gust_real = gust * 1.60934
+
+consulta_p = "INSERT INTO vientos VALUES (clave_v, ?, ?, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
+cursor.execute(consulta_p, (fecha, velocidad_real, gust_real, direccion))#Le paso los valores y ejecuto la sentencia sql.
+conexion.commit()
+
+presion_a = float(datos['data']['pressure']['absolute']['value'])
+presion_r = float(datos['data']['pressure']['relative']['value'])
+
+consulta_p = "INSERT INTO presion VALUES (clave_p, ?, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
+cursor.execute(consulta_p, (fecha, presion_a, presion_r))#Le paso los valores y ejecuto la sentencia sql.
+conexion.commit()
