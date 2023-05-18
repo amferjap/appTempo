@@ -21,13 +21,13 @@ df_precipitaciones = pd.DataFrame(datos_precipitaciones, columns=['clave_prec', 
 consulta_t = "SELECT * FROM temperaturas"
 cursor.execute(consulta_t)
 datos_temperaturas = cursor.fetchall()
-df_temperaturas = pd.DataFrame(datos_temperaturas, columns=['clave_t', 'fecha', 'maxima', 'minima'])
+df_temperaturas = pd.DataFrame(datos_temperaturas, columns=['clave_t', 'fecha', 'maxima'])
 
 # Leer datos de la tabla humedades en un DataFrame
 consulta_h = "SELECT * FROM humedades"
 cursor.execute(consulta_h)
 datos_humedades = cursor.fetchall()
-df_humedades = pd.DataFrame(datos_humedades, columns=['clave_h', 'fecha', 'maxima', 'minima'])
+df_humedades = pd.DataFrame(datos_humedades, columns=['clave_h', 'fecha', 'maxima'])
 
 conexion.close()
 # Creación de los métodos get para la obtención de datos de las tablas
@@ -43,18 +43,12 @@ def obtner_promedio_prob_precipitacion():
 def obtener_promedio_maxima_temperatura():
     promedio_maxima_temperatura = df_temperaturas['maxima'].mean()
     return jsonify(promedio_maxima_temperatura)
-def obtener_promedio_minima_temperatura():
-    promedio_minima_temperatura = df_temperaturas['minima'].mean()
-    return jsonify(promedio_minima_temperatura)
 
 # Obtener la humedad relativa máxima y mínima promedio por día
 @app.route('/promedio_humedades', methods=['GET'])
 def obtener_promedio_maxima_humedad():
     promedio_maxima_humedad = df_humedades['maxima'].mean()
     return jsonify(promedio_maxima_humedad)
-def obtener_promedio_minima_humedad(): 
-    promedio_minima_humedad = df_humedades['minima'].mean()
-    return jsonify(promedio_minima_humedad)
 
 # Obtener probabilidad de temperaturas
 @app.route('/probabilidad_calor', methods=['GET'])
@@ -64,13 +58,6 @@ def obtener_probabilidad_calor():
     temperatura_porcentaje = probabilidad_calor * 100
     probabilidad_formateada = '{:.0f}'.format(temperatura_porcentaje)
     return jsonify(probabilidad_formateada)
-@app.route('/probabilidad_frio', methods=['GET'])
-def obtener_probabilidad_frio():
-    df_filtrado_fr = df_temperaturas[df_temperaturas['minima']<5]
-    probabilidad_frio = len(df_filtrado_fr)/len(df_temperaturas['minima'])
-    temperatura_porcentaje_fr = probabilidad_frio * 100
-    probabilidad_formateada_fr = '{:.0f}'.format(temperatura_porcentaje_fr)
-    return jsonify(probabilidad_formateada_fr)
 
 #Iniciar la API
 if __name__ == '__main__':
