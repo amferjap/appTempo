@@ -12,22 +12,22 @@ conexion = mariadb.connect(
 cursor = conexion.cursor()
 
 # Leer datos de la tabla precipitaciones en un DataFrame
-consulta_p = "SELECT * FROM precipitaciones"
+consulta_p = "SELECT probabilidad FROM precipitaciones WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) AND FECHA <= CURDATE()"
 cursor.execute(consulta_p)
 datos_precipitaciones = cursor.fetchall()
-df_precipitaciones = pd.DataFrame(datos_precipitaciones, columns=['clave_prec', 'fecha', 'probabilidad'])
+df_precipitaciones = pd.DataFrame(datos_precipitaciones, columns=['probabilidad'])
 
 # Leer datos de la tabla temperaturas en un DataFrame
-consulta_t = "SELECT * FROM temperaturas"
+consulta_t = "SELECT maxima FROM temperaturas WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) AND FECHA <= CURDATE()"
 cursor.execute(consulta_t)
 datos_temperaturas = cursor.fetchall()
-df_temperaturas = pd.DataFrame(datos_temperaturas, columns=['clave_t', 'fecha', 'maxima'])
+df_temperaturas = pd.DataFrame(datos_temperaturas, columns=['maxima'])
 
 # Leer datos de la tabla humedades en un DataFrame
-consulta_h = "SELECT * FROM humedades"
+consulta_h = "SELECT maxima FROM humedades WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 10 DAY) AND FECHA <= CURDATE()"
 cursor.execute(consulta_h)
 datos_humedades = cursor.fetchall()
-df_humedades = pd.DataFrame(datos_humedades, columns=['clave_h', 'fecha', 'maxima'])
+df_humedades = pd.DataFrame(datos_humedades, columns=['maxima'])
 
 conexion.close()
 # Creación de los métodos get para la obtención de datos de las tablas

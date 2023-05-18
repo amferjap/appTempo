@@ -18,10 +18,7 @@ elif st.button('Humedades'):
     st.write(x.text)
 
 # Inserta un botón para la obtención de la probabilidad de frío o calor, dependiendo de que pulse mostrará uno u otro.
-st.write('Frío o Calor')
+st.write('Probalidad de calor')
 if st.button('Calor'):
     y = requests.get('http://api_backend:5000/probabilidad_calor')
     st.write(y.text,'%')
-if st.button('Frío'):
-    z = requests.get('http://api_backend:5000/probabilidad_frio')
-    st.write(z.text,'%')
