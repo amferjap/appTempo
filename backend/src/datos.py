@@ -39,11 +39,12 @@ velocidad = float(datos['data']['wind']['wind_speed']['value'])
 gust = float(datos['data']['wind']['wind_gust']['value'])
 direccion = float(datos['data']['wind']['wind_direction']['value'])
 
-velocidad_real = velocidad * 1.60934
-gust_real = gust * 1.60934
+velocidad_km = velocidad * 1.60934
+nudos = velocidad * 0.868976
+gust_km = gust * 1.60934
 
 consulta_p = "INSERT INTO vientos VALUES (clave_v, ?, ?, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
-cursor.execute(consulta_p, (fecha, velocidad_real, gust_real, direccion))#Le paso los valores y ejecuto la sentencia sql.
+cursor.execute(consulta_p, (fecha, nudos, gust_km, direccion))#Le paso los valores y ejecuto la sentencia sql.
 conexion.commit()
 
 presion_a = float(datos['data']['pressure']['absolute']['value'])
