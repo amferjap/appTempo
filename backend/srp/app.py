@@ -135,19 +135,22 @@ app = Flask(__name__)
 @app.route('/promedio_prob_precipitacion', methods=['GET'])
 def obtner_promedio_prob_precipitacion():
     promedio_prob_precipitacion = df_precipitaciones['prob'].mean()
-    return jsonify(promedio_prob_precipitacion)
+    precipitaciones_formateada = '{:.2f}'.format(promedio_prob_precipitacion)
+    return jsonify(precipitaciones_formateada)
 
 # Obtener la temperatura máxima y mínima promedio por día
 @app.route('/promedio_temperaturas', methods=['GET'])
 def obtener_promedio_maxima_temperatura():
     promedio_maxima_temperatura = df_temperaturas['maxima'].mean()
-    return jsonify(promedio_maxima_temperatura)
+    temperaturas_formateada = '{:.2f}'.format(promedio_maxima_temperatura)
+    return jsonify(temperaturas_formateada)
 
 # Obtener la humedad relativa máxima y mínima promedio por día
 @app.route('/promedio_humedades', methods=['GET'])
 def obtener_promedio_maxima_humedad():
     promedio_maxima_humedad = df_humedades['maxima'].mean()
-    return jsonify(promedio_maxima_humedad)
+    humedad_formateada = '{:.0f}'.format(promedio_maxima_humedad)
+    return jsonify(humedad_formateada)
 
 # Obtener probabilidad de temperaturas
 @app.route('/probabilidad_calor', methods=['GET'])
@@ -192,12 +195,6 @@ def navegar_actual():
         return ('Se recomienda no navegar')
     if nav_actual == '110' or nav_actual == '120' or nav_actual == '130':
         return ('Imposible Navegar')
-
-@app.route('/grafica_temperatura', methods=['GET'])
-def grafica_t():
-    global df_temperaturas
-    return(df_temperaturas)
-
 
 #Iniciar la API
 if __name__ == '__main__':

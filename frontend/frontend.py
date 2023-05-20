@@ -1,42 +1,51 @@
 import streamlit as st
 import requests
 import altair as alt
+import pandas as pd
 
 #Inseta en la página una presentación
-st.header('Bienvenido a appTiempo')
-st.subheader('¿Que te gustaría saber?')
-
-graf_t = requests.get('http://api_backend:5000/grafica_temperatura')
-st.bar_chart(data=graf_t.content, width=3, height=3, use_container_width=True)
+st.title('Bienvenido a appTiempo')
+st.header('¿Que te gustaría saber?')
 
 # Crea un botón en la pagina para la obtención de pormedios, dependiendo que pulse mostrará un promedio u otro.
-st.write('Promedios')
-if st.button('Precipitaciones'):
+col1, col2, col5 = st.columns(3)
+
+with col1:
+    st.subheader('Precipitaciones')
     r = requests.get('http://api_backend:5000/promedio_prob_precipitacion')
     st.write(r.text)
-elif st.button('Temperaturas'):
+
+with col2:
+    st.subheader('Temperaturas')
     v = requests.get('http://api_backend:5000/promedio_temperaturas')
     st.write(v.text)
-elif st.button('Humedades'):
+
+with col5:
+    st.subheader('Humedades')
     x = requests.get('http://api_backend:5000/promedio_humedades')
     st.write(x.text)
 
 # Inserta un botón para la obtención de la probabilidad de frío o calor, dependiendo de que pulse mostrará uno u otro.
-st.write('Probalidad de calor')
-if st.button('Calor'):
-    y = requests.get('http://api_backend:5000/probabilidad_calor')
-    st.write(y.text,'%')
-st.write('Probalidad de calor')
-if st.button('Frio'):
-    w = requests.get('http://api_backend:5000/probabilidad_frio')
-    st.write(w.text,'%')
+col3,col4 = st.columns(2)
 
-st.write('Condiciones para navegar')
-if st.button('Navegar'):
+with col3:
+    st.write('Probalidad de calor')
+    if st.button('Calor'):
+        y = requests.get('http://api_backend:5000/probabilidad_calor')
+        st.write(y.text,'%')
+with col4:
+    st.write('Probalidad de frío')
+    if st.button('Frio'):
+        w = requests.get('http://api_backend:5000/probabilidad_frio')
+        st.write(w.text,'%')
+
+st.subheader('Condciones para navegar')
+
+tab1, tab2 = st.tabs(["Pornóstico", "Actual"])
+with tab1:
     z = requests.get('http://api_backend:5000/condiciones_nav')
-    st.write(z.text)
+    st.info(z.text)
 
-st.write('Condiciones para navegar actuales')
-if st.button('Navegar actualmente'):
+with tab2:
     a = requests.get('http://api_backend:5000/condiciones_nav_actual')
-    st.write(a.text)
+    st.info(a.text)

@@ -14,26 +14,26 @@ services:
 #     networks:
 #       - appTiempo
 
-#   api_backend:
-#     build:
-#       context: ./backend/srp
-#       dockerfile: Dockerfile
-# #    image: ruvika07/backend:v1
-#     container_name: api_backend
-#     ports:
-#       - '5000:5000'
-#     networks:
-#       - appTiempo
-
-  frontend:
+  api_backend:
     build:
-      context: ./frontend
+      context: ./backend/srp
       dockerfile: Dockerfile
-#    image: ruvika07/frontend:v1
-    container_name: frontend
+#    image: ruvika07/backend:v1
+    container_name: api_backend
     ports:
-      - '8501:8501'
-    # depends_on: 
-    #   - api_backend
+      - '5000:5000'
     networks:
       - appTiempo
+
+#   frontend:
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile
+# #    image: ruvika07/frontend:v1
+#     container_name: frontend
+#     ports:
+#       - '8501:8501'
+#     # depends_on: 
+#     #   - api_backend
+#     networks:
+#       - appTiempo
