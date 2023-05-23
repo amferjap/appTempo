@@ -4,8 +4,8 @@ import pytemperature
 import datetime
 
 conexion = mariadb.connect( #Parámetros necesarios para la conexión con el servidor de base de datos.
-    user='ruben',
-    password='ruben',
+    user='root',
+    password='root',
     host='bd_app',
     database='appTiempo',
 )
@@ -53,3 +53,5 @@ presion_r = float(datos['data']['pressure']['relative']['value'])
 consulta_p = "INSERT INTO presion VALUES (clave_p, ?, ?, ?)"# Creo la variable de la sentencia sql. Las '?' significan que le paseré posteriormente los valores.
 cursor.execute(consulta_p, (fecha, presion_a, presion_r))#Le paso los valores y ejecuto la sentencia sql.
 conexion.commit()
+
+conexion.close()

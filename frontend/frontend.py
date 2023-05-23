@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
-import altair as alt
-import pandas as pd
+import folium
+from streamlit_folium import folium_static
 
 #Inseta en la página una presentación
 st.title('Bienvenido a appTiempo')
@@ -9,7 +9,6 @@ st.header('¿Que te gustaría saber?')
 
 # Crea un botón en la pagina para la obtención de pormedios, dependiendo que pulse mostrará un promedio u otro.
 col1, col2, col5 = st.columns(3)
-
 with col1:
     st.subheader('Precipitaciones')
     r = requests.get('http://api_backend:5000/promedio_prob_precipitacion')
@@ -49,3 +48,11 @@ with tab1:
 with tab2:
     a = requests.get('http://api_backend:5000/condiciones_nav_actual')
     st.info(a.text)
+
+# Crear un mapa centrado en una ubicación específica
+st.title("Estación")
+mapa = folium.Map(location=[37.26801411623821, -6.0622439050974215], zoom_start=12)
+# Añadir un marcador al mapa
+folium.Marker(location=[37.26801411623821, -6.0622439050974215], popup='Estación').add_to(mapa)
+# Mostrar el mapa en Streamlit
+folium_static(mapa)
