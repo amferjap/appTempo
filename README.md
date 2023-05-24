@@ -183,3 +183,7 @@ Por √∫ltimo, he realizado un fichero yml de Docker-compose para la auotmatizaci√
 ``docker-compose up -d``
 
 El comando se debe ejecutar en el mismo directorio del fichero. Los puertos y la red a la que se deben conectar los contenedores vienen especificados en el [fichero](./docker-compose.yml)
+
+# Licencia
+
+![](Imagenes/licencia.png)
