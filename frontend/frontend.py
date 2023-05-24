@@ -36,14 +36,12 @@ col3,col4 = st.columns(2)
 
 with col3:
     st.write('Probalidad de calor')
-    button_icon = '<i class="fa-solid fa-temperature-high"></i>'
-    if st.button(button_icon):
+    if st.button('Calor'):
         y = requests.get('http://api_backend:5000/probabilidad_calor')
         st.write(y.text,'%')
 with col4:
     st.write('Probalidad de frío')
-    icono_frio = 'f76b'
-    if st.button(icono_frio):
+    if st.button('Frío'):
         w = requests.get('http://api_backend:5000/probabilidad_frio')
         st.write(w.text,'%')
 

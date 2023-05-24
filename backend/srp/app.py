@@ -259,9 +259,9 @@ def ficon():
     conexion.close()
     if df_i_uvi['uvi'].iloc[0] <= 2:
         return('cloud')
-    if df_i_pre['prob'].iloc[0] >= 40:
+    elif df_i_pre['prob'].iloc[0] >= 40:
         return('umbrella')
-    if df_i_temp['maxima'].iloc[0] >= 25:
+    elif df_i_temp['maxima'].iloc[0] >= 25:
         return('sun')
 
 #Iniciar la API
