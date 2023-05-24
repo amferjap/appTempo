@@ -6,6 +6,10 @@ WORKDIR /usr/src/app
 COPY . .
 #Instala las librerías necesarias de python.
 RUN pip install --no-cache-dir -r requirements.txt
+#Crear directorio donde se gaurda la configuración
+RUN mkdir .streamlit
+#Copiar archivo de configuración tema en su ruta
+RUN cp config.toml .streamlit/
 #Exponer puerto de Contenedor
 EXPOSE 8501
 #Inicia el servicio del contenedor con el frontend

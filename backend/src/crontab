@@ -1,1 +1,1 @@
-*/15 * * * * python3 /datos.py
+*/2 * * * * python3 /datos.py

@@ -240,6 +240,30 @@ def navegar_actual():
     if nav_actual == '110' or nav_actual == '120' or nav_actual == '130':
         return ('Imposible Navegar')
 
+@app.route('/icono', methods=['GET']) #Endpoint para pasarle al frontend el tipo de icono a mostrar en el mapa en fcunción de las condiciones climatológicas.
+def ficon():
+    conexion = establecer_conexion()
+    cursor = conexion.cursor()
+    consulta_tic = "SELECT maxima FROM temperaturas ORDER BY dia DESC LIMIT 1"
+    cursor.execute(consulta_tic)
+    i_temp = cursor.fetchall()
+    df_i_temp = pd.DataFrame(i_temp, columns=['maxima'])
+    consulta_tpre = "SELECT prob FROM precipitaciones ORDER BY dia DESC LIMIT 1"
+    cursor.execute(consulta_tpre)
+    i_pre = cursor.fetchall()
+    df_i_pre = pd.DataFrame(i_pre, columns=['prob'])
+    consulta_uvi = "SELECT uvi FROM solar ORDER BY dia DESC LIMIT 1"
+    cursor.execute(consulta_uvi)
+    i_uvi = cursor.fetchall()
+    df_i_uvi = pd.DataFrame(i_uvi, columns=['uvi'])
+    conexion.close()
+    if df_i_uvi['uvi'].iloc[0] <= 2:
+        return('cloud')
+    if df_i_pre['prob'].iloc[0] >= 40:
+        return('umbrella')
+    if df_i_temp['maxima'].iloc[0] >= 25:
+        return('sun')
+
 #Iniciar la API
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

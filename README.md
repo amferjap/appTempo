@@ -129,6 +129,10 @@ Antes de comenzar con el desarrollo de la aplicación, voy a crear las tablas en
 
 ![](Imagenes/tabla-presion.png)
 
+- Solar
+
+![](Imagenes/tabla-solar.png)
+
 ## Backend
 
 El backend estará conformado por un microservicio de obtención de datos, uno de análisis de datos que funcionará a su vez como una api rest para comunicarse con el frontend y el servidor de bases de datos.
@@ -137,7 +141,7 @@ El backend estará conformado por un microservicio de obtención de datos, uno d
 
 Se encargará de obtener los datos de la api de la estación, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada en el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
 
-Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute cada quince minutos de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
+Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute cada dos minutos de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
 
 ### Análisis de datos (api)
 

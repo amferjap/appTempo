@@ -54,4 +54,10 @@ consulta_p = "INSERT INTO presion VALUES (clave_p, ?, ?, ?)"# Creo la variable d
 cursor.execute(consulta_p, (fecha, presion_a, presion_r))#Le paso los valores y ejecuto la sentencia sql.
 conexion.commit()
 
+uvi = float(datos['data']['solar_and_uvi']['uvi']['value'])
+
+consulta_u = 'INSERT INTO solar VALUES (clave_u, ?, ?)'
+cursor.execute(consulta_u, (fecha, uvi))
+conexion.commit()
+
 conexion.close()
