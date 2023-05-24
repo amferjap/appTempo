@@ -7,11 +7,12 @@
 3. [Creación del entorno.](#Entorno)
 4. [Desarrollo de la app.](#Desarrollo)
 5. [Integración](#Integración)
+6. [Licencia](#Licencia)
 
 # Propósito
 
-Este es el proyecto que he realizado para la finalización del Grado Superior de Administración en Sistermas Informáticos en Red.
-Consiste en el desarrollo de una app con Python para la recogida automática de datos de AEMET y el análisis los mismos para realizar previsiones futuras. El desarrollo de la app, estará sometido a los principios
+Este es otro modelo de proyecto que he realizado para la finalización del Grado Superior de Administración en Sistermas Informáticos en Red.
+Consiste en el desarrollo de una app con Python para la recogida automática de datos desde una estación memetorológica proporiconada por el centro y el análisis los mismos para realizar previsiones futuras. El desarrollo de la app, estará sometido a los principios
 de la integración continua utilizando las herraminetas necesarias para ello.
 Por otro lado, esta app estará conformada por un backend y un frontend. El backend se compone de una aplicación de recogida de datos, una aplicación de análisis de datos, una base de datos y una api rest. Esta última, servirá para
 establecer la comunicación entre el backend y el frontend, el cual mostrará a través de la web los análisis realizados de los datos.
@@ -19,8 +20,6 @@ establecer la comunicación entre el backend y el frontend, el cual mostrará a 
 # Herramientas
 
 Python: lenguaje de programación utilizado para el desarrollo de la app.
-
-BeautifulSoup: librería de Python que me permitirá realizar web scrapping y así obtener los datos que me interesen de AEMET y almacenarlos en mi servidor de base de datos.
 
 Pandas: librería de Python para el anaĺsiis de los datos almacenados.
 
@@ -35,6 +34,8 @@ MariaDB: servidor de base de datos.
 Virtualbox: progrmama para virtualización que utlizaré para crear un servidor de Jenkins.
 
 Docker: programa de creación de contenedores que me permitirá separar el forntend y el backend, para facilitarme el desarrollo de los mismos y mejorar su rendimiento.
+
+Estación meteorológica: viene configurada con una api, la cual emite los datos que recoge. A través de filtros con json, parsearé los datos según interesen.
 
 # Entorno
 
@@ -120,25 +121,33 @@ Antes de comenzar con el desarrollo de la aplicación, voy a crear las tablas en
 
 ![](Imagenes/tabla_hum.png)
 
+- Vientos
+
+![](Imagenes/tabla-viento.png)
+
+- Presión
+
+![](Imagenes/tabla-presion.png)
+
 ## Backend
 
 El backend estará conformado por un microservicio de obtención de datos, uno de análisis de datos que funcionará a su vez como una api rest para comunicarse con el frontend y el servidor de bases de datos.
 
 ### Obtención de datos
 
-Se encargará de obtener los datos de los fichero xml proporcionados por AEMET, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada en el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
+Se encargará de obtener los datos de la api de la estación, parsearlos e insertarlos en las tablas creadas previamente. La explicación del código viene detallada en el propio código, puedes verlo pinchando [aquí](backend/src/datos.py)
 
-Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el] funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute una vez al día de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
+Este programa se compilará como imagen Docker partiendo de una imagen Debian. En ese contenedor se instalarán todas las librerías y paquetes necesarios para el funcionamiento del programa. Además, se creará con crontab una tarea programada para que el programa se ejecute cada quince minutos de manera automática. Todo este proceso se configurará con un [Dockerfile](backend/src/Dockerfile), automatizando el proceso de compilación de la imagen y obteniendo un contenedor con el servicio de web scrapping. Para la creación de la tarea con crontab en el contenedor, es necesario la existencia de un fichero [crontab](backend/src/crontab) con la configuración de la tarea. Al igual que el código principal, los pasos están explicados en los ficheros.
 
 ### Análisis de datos (api)
 
-Esta api se ha desarrollado con el framework Flask de python, además se han utilizado las librerías de Pandas y mariadb para analizar los datos extraídos de AEMET y calcular promedios y previsiones futuras. Se puede ver el código de la api [aquí](/backend/srp/app.py)
+Esta api se ha desarrollado con el framework Flask de python, además se han utilizado las librerías de Pandas y mariadb para analizar los datos extraídos y calcular promedios y previsiones futuras. Se puede ver el código de la api [aquí](/backend/srp/app.py)
 
 Esta api se compilará también en una imagen docker. Al igual que la obtención de datos se necesitará un [Dockerfile](/backend/srp/Dockerfile) para estipular los pasos de la configuración de la imagen. Será un contenedor que partirá a partir de una imagen debian, se instalará los paquetes necesarios y las librerías necesarias para el funcionamiento de la api. En este caso, no será necesario la existencia del fichero crontab, ya que será la propia api la que vaya obteniendo información de la base de datos y realizando los calculos necesarios. Todo viene indicado en los ficheros a través de comentarios.
 
 ## Frontend
 
-El frontend será la aplicación encargada de comunicar al usuario con el backend. Estará desarrollada con streamlit, una librería que facilita el desarrollo web con python. Cada dato mostrado en el frontend debe tener un método GET en la api del backend, para que a través de una petición realizada por el frontend obtenga los datos necesarios para mostrar, nuevamente todo viene detallado en el [código](/frontend/frontend.py).
+El frontend será la aplicación encargada de comunicar al usuario con el backend. Estará desarrollada con streamlit, una librería que facilita el desarrollo web con python. Cada dato mostrado en el frontend debe tener un método GET en la api del backend, para que a través de una petición realizada por el frontend obtenga los datos necesarios para mostrar. Todo viene detallado en el [código](/frontend/frontend.py).
 
 Al igual que los programas anteriores, el frontend también se compilará en una imagen Docker a través de un [Dockerfile](/frontend/Dockerfile)
 

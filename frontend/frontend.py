@@ -3,11 +3,11 @@ import requests
 import folium
 from streamlit_folium import folium_static
 
-#Inseta en la página una presentación
+#Inserta en la página una presentación
 st.title('Bienvenido a appTiempo')
 st.header('¿Que te gustaría saber?')
 
-# Crea un botón en la pagina para la obtención de pormedios, dependiendo que pulse mostrará un promedio u otro.
+# Crea tres columnas con los promedios de temperaturas, humedades y precipitaciones
 col1, col2, col5 = st.columns(3)
 with col1:
     st.subheader('Precipitaciones')
@@ -37,6 +37,8 @@ with col4:
     if st.button('Frio'):
         w = requests.get('http://api_backend:5000/probabilidad_frio')
         st.write(w.text,'%')
+
+# Crea un slidesahre con dos ventanas, en una se puede ver las condiciones actuales para navegar y en otra un pronóstico futuro de las condiciones.
 
 st.subheader('Condciones para navegar')
 

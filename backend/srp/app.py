@@ -48,6 +48,7 @@ def humedades():
     return(df_humedades)
 df_humedades = humedades()
 
+# Leer datos de la tabla vientos en un DataFrame
 def vientos():
     conexion = establecer_conexion()
     cursor = conexion.cursor()
@@ -59,6 +60,7 @@ def vientos():
     return(df_vientos)
 df_vientos = vientos()
 
+# Hacer cálculos necesarios para determinar las condiciones de navegación del mar en función de la velocidad del viento
 def condiciones():
     media_v = df_vientos['velocidad'].mean()
     if media_v < 1:
@@ -112,6 +114,7 @@ def vientos_actual():
     return(df_vientos_actual)
 df_vientos_actual = vientos_actual()
 
+# Calcula las condiciones actuales de navegación
 def condiciones_actual():
     velocidad_actual = df_vientos_actual['velocidad'].iloc[0]
     if velocidad_actual < 1:
@@ -154,6 +157,7 @@ def condiciones_actual():
         return(str(130))#'huracanado'
 nav_actual = condiciones_actual()
 
+# Leer la tabla presiones en un DataFrame
 def presiones():
     conexion = establecer_conexion()
     cursor = conexion.cursor()
@@ -202,6 +206,7 @@ def obtener_probabilidad_calor():
     probabilidad_formateada = '{:.0f}'.format(temperatura_porcentaje)
     return jsonify(probabilidad_formateada)
 
+#Obtener probabilidad de frío
 @app.route('/probabilidad_frio', methods=['GET'])
 def obtener_probabilidad_frio():
     df_filtrado = df_temperaturas[df_temperaturas['maxima'] < 20]
@@ -209,6 +214,7 @@ def obtener_probabilidad_frio():
     temperatura_porcentaje = probabilidad_frio * 100
     probabilidad_formateada = '{:.0f}'.format(temperatura_porcentaje)
     return jsonify(probabilidad_formateada)
+
 
 @app.route('/condiciones_nav', methods=['GET'])
 def navegar():
