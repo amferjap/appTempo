@@ -7,6 +7,7 @@
 3. [Desarrollo de la app.](#Desarrollo)
 4. [Integración](#Integración)
 5. [Licencia](#Licencia)
+6. [Referencias](#Referencias)
 
 # Herramientas
 
@@ -182,3 +183,11 @@ El comando se debe ejecutar en el mismo directorio del fichero. Los puertos y la
 # Licencia
 
 ![](Imagenes/licencia.png)
+
+# Referencias
+
+- [Estación Meteorológica](https://www.sainlogic.com/spanish/estacion-meteorologica-inalambrica-sainlogic-con-sensor-para-exteriores-8-en-1-temperatura-presion-del-aire-humedad-indicador-de-viento-colector-de-lluvia-fase-lunar-reloj-despertador-1.html)
+
+- [Stack Overflow](https://stackoverflow.com)
+
+- [Open Webinars](https://openwebinars.net/academia/portada/pandas-numpy/)
