@@ -18,7 +18,7 @@ Los datos se recogerán desde la web de aemet, realizando web scrapping.
 
 Los datos se obtendrán a través de una estación meteorológica proporcionada por el centro.
 
-Ambas versiones utilizarán las mismas base de datos, api y frontend. La diferencia entre ambas, es como se obtienen e insertan los datos.
+Ambas versiones utilizarán las mismas base de datos, pero tendrán cambios en la forma de obtener datos, la api-rest y el front.
 
 Para facilitarme la tarea de que datos utilizar para hacer cálculos y tener valores más realistas y efectivos, he planteado una aplicación para calcular las condiciones meteorológicas de una playa. La aplicación mostrará promedios (temperaturas, lluvias y humedad), condiciones del mar para navegar y estado actual del clima. Este último se mostrará a través de un icono en un mapa con la la localización de la estación.
 
