@@ -23,3 +23,5 @@ Ambas versiones utilizarán las mismas base de datos, api y frontend. La diferen
 Para facilitarme la tarea de que datos utilizar para hacer cálculos y tener valores más realistas y efectivos, he planteado una aplicación para calcular las condiciones meteorológicas de una playa. La aplicación mostrará promedios (temperaturas, lluvias y humedad), condiciones del mar para navegar y estado actual del clima. Este último se mostrará a través de un icono en un mapa con la la localización de la estación.
 
 Para finalizar, ambas versiones tienen toda la documentación de los procedimientos y explicaciones de los códigos. Accediendo a las ramas, podréis ver la documentación. Además de programas y archivos necesarios para el funcionamiento de la app.
+
+![](licencia.png)
