@@ -24,4 +24,6 @@ Para facilitarme la tarea de que datos utilizar para hacer cálculos y tener val
 
 Para finalizar, ambas versiones tienen toda la documentación de los procedimientos y explicaciones de los códigos. Accediendo a las ramas, podréis ver la documentación. Además de programas y archivos necesarios para el funcionamiento de la app.
 
+## Licencia
+
 ![](licencia.png)
