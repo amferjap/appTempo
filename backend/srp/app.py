@@ -60,7 +60,7 @@ def vientos():
     return(df_vientos)
 df_vientos = vientos()
 
-# Hacer cálculos necesarios para determinar las condiciones de navegación del mar en función de la velocidad del viento
+# Hacer cálculos necesarios para determinar las condiciones de navegación del mar en función de la velocidad del viento, en función de la velocidad la cual está medida en nudos, mandará un valor al endpoint.
 def condiciones():
     media_v = df_vientos['velocidad'].mean()
     if media_v < 1:
@@ -228,7 +228,7 @@ def navegar():
     if nav == '110' or nav == '120' or nav == '130':
         return ('Imposible Navegar')
     
-@app.route('/condiciones_nav_actual', methods=['GET'])
+@app.route('/condiciones_nav_actual', methods=['GET']) #Manda un mensaje en función del valor calculado por la función.
 def navegar_actual():
     global nav_actual
     if nav_actual == '10' or nav_actual == '20' or nav_actual == '30' or nav_actual == '40':
@@ -240,7 +240,7 @@ def navegar_actual():
     if nav_actual == '110' or nav_actual == '120' or nav_actual == '130':
         return ('Imposible Navegar')
 
-@app.route('/icono', methods=['GET']) #Endpoint para pasarle al frontend el tipo de icono a mostrar en el mapa en fcunción de las condiciones climatológicas.
+@app.route('/icono', methods=['GET']) #Endpoint para pasarle al frontend el tipo de icono a mostrar en el mapa en función de las condiciones climatológicas.
 def ficon():
     conexion = establecer_conexion()
     cursor = conexion.cursor()
@@ -257,12 +257,14 @@ def ficon():
     i_uvi = cursor.fetchall()
     df_i_uvi = pd.DataFrame(i_uvi, columns=['uvi'])
     conexion.close()
-    if df_i_uvi['uvi'].iloc[0] <= 2:
+    if df_i_uvi['uvi'].iloc[0] <= 2 and df_i_uvi['uvi'].iloc[0] > 0:
         return('cloud')
     elif df_i_pre['prob'].iloc[0] >= 40:
         return('umbrella')
-    elif df_i_temp['maxima'].iloc[0] >= 25:
+    elif df_i_temp['maxima'].iloc[0] >= 20 and df_i_uvi['uvi'].iloc[0] > 2:
         return('sun')
+    else:
+        return('moon')
 
 #Iniciar la API
 if __name__ == '__main__':

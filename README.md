@@ -1,21 +1,12 @@
-# appTempo
+# Estación
 
 # Índice
 
-1. [Propósito de este proyecto.](#Propósito)
-2. [Herramientas.](#Herramientas)
-3. [Creación del entorno.](#Entorno)
-4. [Desarrollo de la app.](#Desarrollo)
-5. [Integración](#Integración)
-6. [Licencia](#Licencia)
-
-# Propósito
-
-Este es otro modelo de proyecto que he realizado para la finalización del Grado Superior de Administración en Sistermas Informáticos en Red.
-Consiste en el desarrollo de una app con Python para la recogida automática de datos desde una estación memetorológica proporiconada por el centro y el análisis los mismos para realizar previsiones futuras. El desarrollo de la app, estará sometido a los principios
-de la integración continua utilizando las herraminetas necesarias para ello.
-Por otro lado, esta app estará conformada por un backend y un frontend. El backend se compone de una aplicación de recogida de datos, una aplicación de análisis de datos, una base de datos y una api rest. Esta última, servirá para
-establecer la comunicación entre el backend y el frontend, el cual mostrará a través de la web los análisis realizados de los datos.
+1. [Herramientas.](#Herramientas)
+2. [Creación del entorno.](#Entorno)
+3. [Desarrollo de la app.](#Desarrollo)
+4. [Integración](#Integración)
+5. [Licencia](#Licencia)
 
 # Herramientas
 
@@ -49,7 +40,7 @@ Con Docker crearé un contenedor con mariadb. Posteriormente, crearé un usuario
 
 ## Entorno virtual
 
-Para el desarrollo de la aplicación me ayudaré de los entornos vituales de Python, utilizaré uno para el desarrollo del backend y otro para el del frontned. De esta manera, tendré ambos desarrollos apartados y me permitirá
+Para el desarrollo de la aplicación me ayudaré de los entornos virtuales de Python, utilizaré uno para el desarrollo del backend y otro para el del frontned. De esta manera, tendré ambos desarrollos apartados y me permitirá
 crear contenedores más livianos, ya que, solo se instalarán las librerías necesarias para cada uno.
 
 ### Backend
