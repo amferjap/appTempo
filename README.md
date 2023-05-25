@@ -6,6 +6,8 @@
 2. [Creación del entorno.](#Entorno)
 3. [Desarrollo de la app.](#Desarrollo)
 4. [Integración](#Integración)
+5. [Licencia](#Licencia)
+6. [Referencias](#Referencias)
 
 # Herramientas
 
@@ -165,3 +167,15 @@ Por último, he realizado un fichero yml de Docker-compose para la auotmatizaci�
 ``docker-compose up -d``
 
 El comando se debe ejecutar en el mismo directorio del fichero. Los puertos y la red a la que se deben conectar los contenedores vienen especificados en el [fichero](./docker-compose.yml)
+
+# Licencia
+
+![](https://github.com/rubenamadoc/App_proyecto/blob/main/licencia.png)
+
+# Referencias
+
+- [Stack Overflow](https://stackoverflow.com)
+
+- [Open Webinars](https://openwebinars.net/academia/portada/pandas-numpy/)
+
+- [BeautifoulSoup](https://aprendepython.es/pypi/scraping/beautifulsoup/)
