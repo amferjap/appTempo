@@ -1,20 +1,11 @@
-# appTempo
+# AEMET
 
 # Índice
 
-1. [Propósito de este proyecto.](#Propósito)
-2. [Herramientas.](#Herramientas)
-3. [Creación del entorno.](#Entorno)
-4. [Desarrollo de la app.](#Desarrollo)
-5. [Integración](#Integración)
-
-# Propósito
-
-Este es el proyecto que he realizado para la finalización del Grado Superior de Administración en Sistermas Informáticos en Red.
-Consiste en el desarrollo de una app con Python para la recogida automática de datos de AEMET y el análisis los mismos para realizar previsiones futuras. El desarrollo de la app, estará sometido a los principios
-de la integración continua utilizando las herraminetas necesarias para ello.
-Por otro lado, esta app estará conformada por un backend y un frontend. El backend se compone de una aplicación de recogida de datos, una aplicación de análisis de datos, una base de datos y una api rest. Esta última, servirá para
-establecer la comunicación entre el backend y el frontend, el cual mostrará a través de la web los análisis realizados de los datos.
+1. [Herramientas.](#Herramientas)
+2. [Creación del entorno.](#Entorno)
+3. [Desarrollo de la app.](#Desarrollo)
+4. [Integración](#Integración)
 
 # Herramientas
 
