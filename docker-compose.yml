@@ -5,6 +5,15 @@ networks:
     external: True
 
 services:
+#   bd:
+#     build:
+#       context: ./backend/bd
+#       dockerfile: Dockerfile
+# #    image: ruvika07/webscrapping:v1
+#     container_name: bd_app
+#     networks:
+#       - appTiempo
+
   datos:
     build:
       context: ./backend/src
