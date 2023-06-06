@@ -1,9 +1,5 @@
 version: '3'
 
-networks:
-  appTiempo:
-    external: True
-
 services:
   bd:
     build:
@@ -11,12 +7,6 @@ services:
       dockerfile: Dockerfile
 #    image: ruvika07/webscrapping:v1
     container_name: bd_app
-    networks:
-      - appTiempo
-    volumes:
-      - type: bind
-        source: C:\Users\RubénAmadoCardenas\database
-        target: /var/lib/mysql
 
   datos:
     build:
@@ -24,8 +14,6 @@ services:
       dockerfile: Dockerfile
 #    image: ruvika07/webscrapping:v1
     container_name: datos
-    networks:
-      - appTiempo
 
   api_backend:
     build:
@@ -35,8 +23,6 @@ services:
     container_name: api_backend
     ports:
       - '5000:5000'
-    networks:
-      - appTiempo
 
   frontend:
     build:
@@ -48,5 +34,3 @@ services:
       - '8501:8501'
     depends_on: 
       - api_backend
-    networks:
-      - appTiempo

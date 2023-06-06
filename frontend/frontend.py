@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import folium
 from streamlit_folium import folium_static
+# from folium.plugins import HeatMap
 
 st.set_page_config(
     page_title="appTempo",
@@ -9,6 +10,37 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+def main():
+    # Aplicar estilos CSS para posicionar el texto en la esquina inferior derecha
+    st.markdown(
+        """
+        <style>
+        .footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            color: rgba(250, 250, 250, 0.4);
+            font-size: 14px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            text-align: right;
+
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Agregar el texto
+    st.markdown(
+        """
+        <div class="footer">
+        <p>Designed by Rubén Amado Cárdenas</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 #Inserta en la página una presentación
 st.title('Bienvenido a appTempo')
@@ -64,5 +96,11 @@ st.title("Mapa")
 mapa = folium.Map(location=[37.26801411623821, -6.0622439050974215], zoom_start=12)
 # Añadir un marcador al mapa
 folium.Marker(location=[37.26801411623821, -6.0622439050974215], popup='Estación', icon=folium.Icon(color='black', icon=icono.text, prefix='fa')).add_to(mapa)
+
 # Mostrar el mapa en Streamlit
 folium_static(mapa)
+
+# demo = requests.get('http://api_backend:5000/temperatura')
+# st.text(demo.text)
+
+main()

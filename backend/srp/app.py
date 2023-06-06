@@ -1,6 +1,7 @@
 import pandas as pd
 import mariadb
 from flask import Flask, jsonify
+from flask_caching import Cache
 
 # Conexión a la base de datos
 def establecer_conexion():
@@ -172,8 +173,12 @@ df_presion = presiones()
 # Creación de los métodos get para la obtención de datos de las tablas
 app = Flask(__name__)
 
+# Creación Caché
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+
 # Método get para obtener los promedios de la probabilidad de lluvia
 @app.route('/promedio_prob_precipitacion', methods=['GET'])
+@cache.cached(timeout=120)
 def obtner_promedio_prob_precipitacion():
     global df_precipitaciones
     promedio_prob_precipitacion = df_precipitaciones['prob'].mean()
@@ -182,6 +187,7 @@ def obtner_promedio_prob_precipitacion():
 
 # Obtener la temperatura máxima promedio por día
 @app.route('/promedio_temperaturas', methods=['GET'])
+@cache.cached(timeout=120)
 def obtener_promedio_maxima_temperatura():
     promedio_maxima_temperatura = df_temperaturas['maxima'].mean()
     temperaturas_formateada = '{:.2f}'.format(promedio_maxima_temperatura)
@@ -189,6 +195,7 @@ def obtener_promedio_maxima_temperatura():
 
 # Obtener la humedad relativa máxima promedio por día
 @app.route('/promedio_humedades', methods=['GET'])
+@cache.cached(timeout=120)
 def obtener_promedio_maxima_humedad():
     promedio_maxima_humedad = df_humedades['maxima'].mean()
     humedad_formateada = '{:.0f}'.format(promedio_maxima_humedad)
@@ -196,6 +203,7 @@ def obtener_promedio_maxima_humedad():
 
 # Obtener probabilidad de temperaturas
 @app.route('/probabilidad_calor', methods=['GET'])
+@cache.cached(timeout=120)
 def obtener_probabilidad_calor():
     df_filtrado = df_temperaturas[df_temperaturas['maxima'] > 20]
     df_filtrado_h = df_humedades[df_humedades['maxima'] > 45]
@@ -208,6 +216,7 @@ def obtener_probabilidad_calor():
 
 #Obtener probabilidad de frío
 @app.route('/probabilidad_frio', methods=['GET'])
+@cache.cached(timeout=120)
 def obtener_probabilidad_frio():
     df_filtrado = df_temperaturas[df_temperaturas['maxima'] < 20]
     probabilidad_frio = len(df_filtrado)/len(df_temperaturas['maxima'])
@@ -215,8 +224,8 @@ def obtener_probabilidad_frio():
     probabilidad_formateada = '{:.0f}'.format(temperatura_porcentaje)
     return jsonify(probabilidad_formateada)
 
-
 @app.route('/condiciones_nav', methods=['GET'])
+@cache.cached(timeout=120)
 def navegar():
     global nav
     if nav == '10' or nav == '20' or nav == '30' or nav == '40':
@@ -229,6 +238,7 @@ def navegar():
         return ('Imposible Navegar')
     
 @app.route('/condiciones_nav_actual', methods=['GET']) #Manda un mensaje en función del valor calculado por la función.
+@cache.cached(timeout=120)
 def navegar_actual():
     global nav_actual
     if nav_actual == '10' or nav_actual == '20' or nav_actual == '30' or nav_actual == '40':
@@ -241,6 +251,7 @@ def navegar_actual():
         return ('Imposible Navegar')
 
 @app.route('/icono', methods=['GET']) #Endpoint para pasarle al frontend el tipo de icono a mostrar en el mapa en función de las condiciones climatológicas.
+@cache.cached(timeout=120)
 def ficon():
     conexion = establecer_conexion()
     cursor = conexion.cursor()
@@ -265,6 +276,19 @@ def ficon():
         return('sun')
     else:
         return('moon')
+    
+@app.route('/temperatura', methods=['GET'])
+@cache.cached(timeout=120)
+def demo():
+    conexion = establecer_conexion()
+    cursor = conexion.cursor()
+    consulta_tic = "SELECT maxima FROM temperaturas ORDER BY dia DESC LIMIT 1"
+    cursor.execute(consulta_tic)
+    d_temp = cursor.fetchall()
+    df_d_temp = pd.DataFrame(d_temp, columns=['maxima'])
+    demo = str(df_d_temp['maxima'].iloc[0])
+    conexion.close()
+    return jsonify(demo)
 
 #Iniciar la API
 if __name__ == '__main__':
