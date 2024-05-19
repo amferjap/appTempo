@@ -11,7 +11,7 @@ conexion = mariadb.connect( #Parámetros necesarios para la conexión con el ser
 )
 cursor = conexion.cursor() #Inicialización del cursor que recibirá las secuencias sql.
 
-data = requests.get('https://api.ecowitt.net/api/v3/device/real_time?application_key=4BB7A8EAD086979D5CD6F826A0701FB3&api_key=b0a66202-442d-4f17-9be6-7a4ace047048&mac=7C:87:CE:BC:C1:33&call_back=all') #Sentencia request que utiliza un método get para obtener la información del fichero xml.
+data = requests.get('https://api.ecowitt.net/api/v3/device/real_time?application_key=82306763479E9715864D221F5D6ECC9B&api_key=b4a438bb-bb2d-4540-b0e9-4a53509786a3&mac=7C:87:CE:BC:C1:33&call_back=all') #Sentencia request que utiliza un método get para obtener la información del fichero xml.
 datos = data.json()
 
 fecha = datetime.datetime.now()
